@@ -1,0 +1,35 @@
+---
+- name: Ensure UFW present
+  become: yes
+  ansible.builtin.apt:
+    name:
+    - ufw
+    state: present
+- name: Allow incoming TCP or UDP ports
+  become: yes
+  community.general.ufw:
+    direction: in
+    from_ip: "{{ item['from'] | default('any') }}"
+    interface: "{{ item['interface'] | default(None) }}"
+    proto: "{{ item['proto'] | default('tcp') }}"
+    rule: allow
+    to_ip: "{{ item['to'] | default('any') }}"
+    to_port: "{{ item.port }}"
+  loop: "{{ ufw_rules }}"
+  loop_control:
+    label: to {{ item['to'] | default('any') }}:{{ item.port }}
+- name: Don't log noisy v4 multicast blocking
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/ufw/after.rules
+    insertbefore: "# don't log noisy broadcast"
+    block: |
+      # don't log noisy multicast
+      -A ufw-after-input -m addrtype --dst-type MULTICAST -j ufw-skip-to-policy-input
+  notify: Restart ufw
+- name: Enable logging and start UFW
+  become: yes
+  community.general.ufw:
+    logging: low
+    state: enabled
+...

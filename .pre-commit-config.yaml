@@ -40,8 +40,8 @@ repos:
   # replaces or checks mixed line ending.
   - id: no-commit-to-branch # - don't commit to branch
     args:
-    # - --branch
-    # - main
+    - --branch
+    - main
     - --branch
     - "v[0-9].[0-9]" # yamllint disable-line
   - id: pretty-format-json
@@ -71,10 +71,10 @@ repos:
   hooks:
   - id: gitleaks
 
-# - repo: "https://github.com/jorisroovers/gitlint"
-#   rev: v0.18.0
-#   hooks:
-#   - id: gitlint
+- repo: "https://github.com/jorisroovers/gitlint"
+  rev: v0.18.0
+  hooks:
+  - id: gitlint
 
 - repo: "https://github.com/editorconfig-checker/editorconfig-checker.python"
   rev: 2.6.2
@@ -83,7 +83,7 @@ repos:
     alias: ec
     args:
     - -no-color
-    exclude: ^(LICENSE|.yamllint$)
+    exclude: ^(LICENSE|.yamllint$|roles/ufw/README.md$)
 
 - repo: "https://github.com/semaphor-dk/dansabel"
   rev: 0ce89b6009f628b1681a825519b683dc0f1a1392

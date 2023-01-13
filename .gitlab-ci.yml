@@ -31,4 +31,9 @@ checks_b:
   script:
   - chmod 0700 .
   - ansible-lint
+  - cd ..
+  - mkdir -p ansible_collections/danielfdickinson
+  - cp -r ansible_system_base_debian_dfd ansible_collections/danielfdickinson/system_base_debian
+  - cd ansible_collections/danielfdickinson/system_base_debian
+  - ansible-test sanity
 ...

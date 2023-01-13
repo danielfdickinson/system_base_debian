@@ -1,3 +1,5 @@
+addrtype
+boto
 cliconf
 fnmatch
 maxhoesel
