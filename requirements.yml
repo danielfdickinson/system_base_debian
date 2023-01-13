@@ -1,0 +1,10 @@
+---
+# From Ansible Galaxy
+collections:
+- name: ansible.utils
+  version: 2.8.0
+  source: "https://galaxy.ansible.com"
+- name: community.general
+  version: 6.1.0
+  source: "https://galaxy.ansible.com"
+...
