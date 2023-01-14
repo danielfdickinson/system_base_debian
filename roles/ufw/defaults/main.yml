@@ -1,3 +1,5 @@
 ---
-ufw_role_rules: []
+ufw_common_rules:
+- port: "{{ ansible_ssh_port }}"
+ufw_added_rules: []
 ...

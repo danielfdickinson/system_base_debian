@@ -1,4 +1,11 @@
 ---
+- name: Ensure required variables are set
+  ansible.builtin.assert:
+    that:
+    - ufw_added_rules is defined
+    - ufw_added_rules | length > 0
+    - ufw_rules is defined
+    - ufw_rules | length > 0
 - name: Ensure UFW present
   become: yes
   ansible.builtin.apt:
@@ -10,7 +17,7 @@
   community.general.ufw:
     direction: in
     from_ip: "{{ item['from'] | default('any') }}"
-    interface: "{{ item['interface'] | default(None) }}"
+    interface: "{{ item['interface'] }}"
     proto: "{{ item['proto'] | default('tcp') }}"
     rule: allow
     to_ip: "{{ item['to'] | default('any') }}"

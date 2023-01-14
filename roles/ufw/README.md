@@ -1,50 +1,77 @@
-Role Name
-=========
+# danielfdickinson.system_base_debian.ufw
 
-A brief description of the role goes here.
+Convenience wrapper around `community.general.ufw` that loops over provided
+rules (with sensible defaults to reduce required data entry), and which enables
+basic (low) logging but omitting the logging ipv4 multicast blocks (because that
+is very common and spams the logs with pointless messages).
 
-Requirements
-------------
+## Requirements / Expectations
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+By default expects `ansible_ssh_port` to be set and that the user wants that
+port to be allowed in from anywhere.
 
-Role Variables
---------------
+Since this role depends on `community.general.ufw`, this role will will install
+the `ufw` package using apt, if `ufw` is not already installed.
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+This role is only designed for a fairly simple allowing of tcp and/or udp ports
+to come into the host. It is more a macro than a full role.
 
-Dependencies
-------------
+## Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+### Recommended to be passed in
 
-Example Playbook
-----------------
+|      Variable      | Default                  | Location                     |
+|--------------------|------------- ------------|------------------------------|
+| ansible_ssh_port   | 22                       | global variables             |
+| ufw_added_rules    | \[]                      | defaults                     |
+
+### Overridable defaults
+
+|      Variable      | Default                  | Location                     |
+|--------------------|------------- ------------|------------------------------|
+| ufw_common_rules   | \[port: {{ ansible_ssh_port }}] | defaults              |
+
+### Overridable vars
+
+| ufw_rules          | \[ufw_common_rules, ufw_added_rules] \| flatten | vars  |
+
+### Default rules
+
+For each rules passed in through ufw_*_rules the following defaults are used:
+
+```yaml
+direction: in
+from_ip: "{{ from | default('any') }}"
+interface: "{{ interface }}"
+proto: "{{ proto | default('tcp') }}"
+rule: allow
+to_ip: "{{ to | default('any') }}"
+to_port: "{{ port }}"
+```
+
+## Dependencies
+
+* Depends on the `community.general` collection `ufw` module
+
+## Example Playbook
 
 Including an example of how to use your role (for instance, with variables
 passed in as parameters) is always nice for users too:
 
 ``` yaml
-- hosts: servers
+- hosts: webservers
   roles:
-  - { role: username.rolename, x: 42 }
+  - role: danielfdickinson.system_base_debian.ufw
+    ufw_added_rules:
+    - port: 80
+    - port: 443
 ```
 
-License
--------
+## License
 
-BSD
+MIT
 
-Author Information
-------------------
+## Author Information
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Daniel F. Dickinson \<dfdpublic@wildtechgarden.ca>
+<https://www.wildtechgarden.ca>
