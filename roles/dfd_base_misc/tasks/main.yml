@@ -1,8 +1,13 @@
 ---
-# - name: Ensure required variables are set
-#   ansible.builtin.assert:
-#     that:
-#     - ufw_added_rules is defined
+- name: Ensure required variables are set
+  ansible.builtin.assert:
+    that:
+    - admin_base_homedir is defined
+    - admin_base_homedir is string
+    - admin_base_homedir != ""
+    - admin_user is defined
+    - admin_user is string
+    - admin_user != ""
 - name: Upgrade packages if needed and clean up packages
   become: yes
   ansible.builtin.apt:
