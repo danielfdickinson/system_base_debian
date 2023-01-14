@@ -3,7 +3,7 @@ namespace: danielfdickinson
 name: system_base_debian
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.2.0-alpha.2
+version: 0.2.0-alpha.3
 
 readme: README.md
 

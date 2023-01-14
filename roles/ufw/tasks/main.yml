@@ -6,6 +6,8 @@
     - ufw_added_rules is not string and ufw_added_rules is not mapping and ufw_added_rules is iterable
     - ufw_rules is defined
     - ufw_rules | length > 0
+    - ufw_rules | rejectattr('port', 'defined') | length == 0
+    - ufw_rules | rejectattr('port', 'integer') | length == 0
 - name: Ensure UFW present
   become: yes
   ansible.builtin.apt:
