@@ -1,6 +1,5 @@
 ---
 namespace: danielfdickinson
-
 name: system_base_debian
 
 # The version of the collection. Must be compatible with semantic versioning
@@ -19,13 +18,17 @@ license:
 
 # A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
 # requirements as 'namespace' and 'name'
-tags: []
+tags:
+- base
+- debian
+- system
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {}
+dependencies:
+  community.general: ">=6.1.0"
 
 # The URL of the originating SCM repository
 repository: "https://gitlab.com/danielfdickinson/ansible_system_base_debian_dfd"
@@ -43,7 +46,12 @@ repository: "https://gitlab.com/danielfdickinson/ansible_system_base_debian_dfd"
 # artifact. A pattern is matched from the relative path of the file or directory of the collection directory. This
 # uses 'fnmatch' to match the files or directories. Some directories and files like 'galaxy.yml', '*.pyc', '*.retry',
 # and '.git' are always filtered. Mutually exclusive with 'manifest'
-build_ignore: []
+build_ignore:
+- .gitattributes
+- .gitlab-ci.yml
+- .pre-commit-config.yml
+- tests/config
+- tests/output
 
 # A dict controlling use of manifest directives used in building the collection artifact. The key 'directives' is a
 # list of MANIFEST.in style
