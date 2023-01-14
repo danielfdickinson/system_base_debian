@@ -41,11 +41,11 @@ For each rules passed in through ufw_*_rules the following defaults are used:
 
 ```yaml
 direction: in
-from_ip: "{{ from | default('any') }}"
-interface: "{{ interface }}"
+from_ip: "{{ from | default(omit) }}"
+interface: "{{ interface | default(omit) }}"
 proto: "{{ proto | default('tcp') }}"
 rule: allow
-to_ip: "{{ to | default('any') }}"
+to_ip: "{{ to | default(omit) }}"
 to_port: "{{ port }}"
 ```
 

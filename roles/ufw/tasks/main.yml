@@ -16,11 +16,11 @@
   become: yes
   community.general.ufw:
     direction: in
-    from_ip: "{{ item['from'] | default('any') }}"
-    interface: "{{ item['interface'] }}"
+    from_ip: "{{ item['from'] | default(omit) }}"
+    interface: "{{ item['interface'] | default(omit) }}"
     proto: "{{ item['proto'] | default('tcp') }}"
     rule: allow
-    to_ip: "{{ item['to'] | default('any') }}"
+    to_ip: "{{ item['to'] | default(omit) }}"
     to_port: "{{ item.port }}"
   loop: "{{ ufw_rules }}"
   loop_control:
