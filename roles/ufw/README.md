@@ -21,18 +21,20 @@ to come into the host. It is more a macro than a full role.
 ### Recommended to be passed in
 
 |      Variable      | Default                  | Location                     |
-|--------------------|------------- ------------|------------------------------|
+|--------------------|--------------------------|------------------------------|
 | ansible_ssh_port   | 22                       | global variables             |
 | ufw_added_rules    | \[]                      | defaults                     |
 
 ### Overridable defaults
 
 |      Variable      | Default                  | Location                     |
-|--------------------|------------- ------------|------------------------------|
+|--------------------|--------------------------|------------------------------|
 | ufw_common_rules   | \[port: {{ ansible_ssh_port }}] | defaults              |
 
 ### Overridable vars
 
+|      Variable      | Default                  | Location                     |
+|--------------------|--------------------------|------------------------------|
 | ufw_rules          | \[ufw_common_rules, ufw_added_rules] \| flatten | vars  |
 
 ### Default rules
