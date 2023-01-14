@@ -1,7 +1,11 @@
+DFD
+DFD's
 addrtype
-boto
+anadmin
 cliconf
 fnmatch
+gsub
 maxhoesel
 rejectattr
+skel
 ufw

@@ -83,7 +83,7 @@ repos:
     alias: ec
     args:
     - -no-color
-    exclude: ^(LICENSE|.yamllint$|roles/ufw/README.md$)
+    exclude: ^(LICENSE|.yamllint$|roles/.*/README.md$)
 
 - repo: "https://github.com/semaphor-dk/dansabel"
   rev: 0ce89b6009f628b1681a825519b683dc0f1a1392

@@ -1,0 +1,4 @@
+---
+admin_base_homedir: /home
+admin_user: admin
+...

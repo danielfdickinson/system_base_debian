@@ -1,0 +1,48 @@
+---
+# - name: Ensure required variables are set
+#   ansible.builtin.assert:
+#     that:
+#     - ufw_added_rules is defined
+- name: Upgrade packages if needed and clean up packages
+  become: yes
+  ansible.builtin.apt:
+    autoclean: true
+    autoremove: true
+    purge: true
+    upgrade: yes
+- name: Ensure DFD misc baseline packages are installed
+  become: yes
+  ansible.builtin.apt:
+    name:
+    - acl
+    - molly-guard
+    - mutt
+    - needrestart
+    - powermgmt-base
+    - python3-gi
+    - tmux
+    - unattended-upgrades
+    state: present
+- name: Configure unattended-upgrades
+  become: yes
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    group: root
+    mode: "0644"
+    owner: root
+    src: 50unattended-upgrades
+- name: Configure tmux for new users
+  become: yes
+  ansible.builtin.copy:
+    dest: /etc/skel/.tmux.conf
+    group: root
+    mode: "0644"
+    owner: root
+    src: dot.tmux.conf
+- name: Configure tmux for local admin
+  become: no
+  ansible.builtin.copy:
+    dest: "{{ admin_base_homedir }}/{{ admin_user }}/.tmux.conf"
+    mode: "0644"
+    src: dot.tmux.conf
+...
