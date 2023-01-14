@@ -7,7 +7,8 @@
     - ufw_rules is defined
     - ufw_rules | length > 0
     - ufw_rules | rejectattr('port', 'defined') | length == 0
-    - ufw_rules | rejectattr('port', 'integer') | length == 0
+    - ufw_rules | rejectattr('port', 'string') | length == 0
+    - ufw_rules | map(attribute='port') | map('int') | reject('integer') | length == 0
 - name: Ensure UFW present
   become: yes
   ansible.builtin.apt:

@@ -1,5 +1,5 @@
 ---
 ufw_common_rules:
-- port: "{{ ansible_ssh_port }}"
+- port: "{{ ansible_ssh_port | string }}"
 ufw_added_rules: []
 ...
