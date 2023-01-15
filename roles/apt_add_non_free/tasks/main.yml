@@ -1,0 +1,11 @@
+---
+- name: Configure apt to access contrib and non-free
+  become: yes
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/contrib_non_free.list
+    group: root
+    mode: "0644"
+    owner: root
+    src: contrib_non_free.list
+  notify: Update apt packages lists
+...

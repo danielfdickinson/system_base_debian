@@ -30,11 +30,11 @@ See below
 
 ### Overridable defaults
 
-TBD
+N/A
 
 ### Overridable vars
 
-TBD
+N/A
 
 ### Structure of `f2b_jails`
 

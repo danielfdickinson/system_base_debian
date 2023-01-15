@@ -9,6 +9,7 @@ fnmatch
 gsub
 ignoreip
 maxhoesel
+realtek
 recidive
 rejectattr
 shfmt

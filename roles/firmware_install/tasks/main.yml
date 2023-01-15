@@ -1,0 +1,9 @@
+---
+- name: Install firmware and microcode
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ ['firmware-linux', firmware_extra] | flatten | unique }}"
+    update_cache: true
+    state: present
+  notify: Reboot host
+...
