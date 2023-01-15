@@ -11,5 +11,6 @@ ignoreip
 maxhoesel
 recidive
 rejectattr
+shfmt
 skel
 ufw
