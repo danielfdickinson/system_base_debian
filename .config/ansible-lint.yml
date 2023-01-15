@@ -1,6 +1,6 @@
 ---
 exclude_paths:
 - ../.cache/
-- ../group_vars/*/vault.yml
-- ../host_vars/*/vault.yml
+skip_list:
+- experimental
 ...
