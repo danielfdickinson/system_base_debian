@@ -1,0 +1,6 @@
+[DEFAULT]
+dbpurgeage = 8d
+ignoreip = 127.0.0.1/8 ::1 {{ remote_ignore_ips | default([]) | join(' ') }}
+
+[recidive]
+enabled = true

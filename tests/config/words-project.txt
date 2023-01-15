@@ -3,9 +3,13 @@ DFD's
 addrtype
 anadmin
 cliconf
+dbpurgeage
+elif
 fnmatch
 gsub
+ignoreip
 maxhoesel
+recidive
 rejectattr
 skel
 ufw

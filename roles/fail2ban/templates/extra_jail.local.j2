@@ -1,0 +1,39 @@
+{% if item['dest'] == 'ssh' %}
+[sshd]
+#mode = normal
+port = {{ item['port'] | default('ssh') }}
+enabled = true
+
+{% elif item['dest'] == 'dovecot' %}
+[dovecot]
+enabled = true
+{% if item['port'] is defined %}
+port = {{ item['port'] }}
+{% endif %}
+
+[sieve]
+enabled = true
+{% if item['port_extra'] is defined %}
+port = {{ item['port_extra'] }}
+{% endif %}
+
+{% elif item['dest'] == 'mx' %}
+[postfix-rbl]
+{% if item['port'] is defined %}
+port = {{ item['port'] }}
+{% endif %}
+enabled = true
+
+{% elif item['dest'] == 'haproxy' %}
+[haproxy-http-auth]
+enabled = true
+{% if item['port'] is defined %}
+port = {{ item['port'] }}
+{% endif %}
+
+{% else %}
+{% if item['content'] is defined %}
+{{ item.content }}
+
+{% endif %}
+{% endif %}

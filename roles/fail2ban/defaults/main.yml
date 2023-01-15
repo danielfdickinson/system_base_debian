@@ -1,0 +1,7 @@
+---
+f2b_jails:
+- dest: ssh
+  port: "{{ ansible_ssh_port }}"
+# - dest: special-jail
+#   content: "{{ your_special_content }}"
+...
