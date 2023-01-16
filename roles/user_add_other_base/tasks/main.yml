@@ -1,0 +1,49 @@
+---
+- name: Ensure required vars are defined
+  become: yes
+  ansible.builtin.assert:
+    that:
+    - new_base_homedir is defined
+    - new_base_homedir is string
+    - new_user_ssh_key is not defined or (new_user_ssh_key is defined and new_user_ssh_key is string)
+    - new_user is defined
+    - new_user is string
+    - new_users_groups is defined
+    - new_users_groups is not string and new_users_groups is not mapping and new_users_groups is iterable
+    quiet: true
+- name: Add user
+  become: yes
+  ansible.builtin.user:
+    name: "{{ new_user }}"
+    comment: "{{ new_comment | default(omit) }}"
+    groups: "{{ new_users_groups }}"
+    home: "{{ new_base_homedir }}/{{ new_user }}"
+    password_lock: true
+    shell: /bin/bash
+    state: present
+  notify: Reload SSH server
+- name: Lockdown new user home dir
+  become: yes
+  ansible.builtin.file:
+    path: "{{ new_base_homedir }}/{{ new_user }}"
+    group: "{{ new_user }}"
+    mode: "0700"
+    owner: "{{ new_user }}"
+    state: directory
+- name: Lockdown new user ssh dir
+  become: yes
+  ansible.builtin.file:
+    path: "{{ new_base_homedir }}/{{ new_user }}/.ssh"
+    group: "{{ new_user }}"
+    mode: "0700"
+    owner: "{{ new_user }}"
+    state: directory
+- name: Add new user incoming public key
+  become: yes
+  ansible.builtin.template:
+    dest: "{{ new_base_homedir }}/{{ new_user }}/.ssh/authorized_keys"
+    group: "{{ new_user }}"
+    mode: "0600"
+    owner: "{{ new_user }}"
+    src: authorized_keys.j2
+...

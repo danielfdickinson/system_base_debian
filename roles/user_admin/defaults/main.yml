@@ -1,0 +1,5 @@
+---
+new_base_homedir: /home
+new_comment: "{{ default(admin_gecos) | default(null) }}"
+new_admin_user: admin
+...

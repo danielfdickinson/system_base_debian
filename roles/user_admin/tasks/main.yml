@@ -1,0 +1,53 @@
+---
+- name: Ensure required vars are defined
+  become: yes
+  ansible.builtin.assert:
+    that:
+    - new_base_homedir is defined
+    - new_base_homedir is string
+    - new_admin_password is defined
+    - new_admin_password is string
+    - new_admin_ssh_key is not defined or (new_admin_ssh_key is defined and new_admin_ssh_key is string)
+    - new_admin_user is defined
+    - new_admin_user is string
+    quiet: true
+- name: Add admin_user
+  become: yes
+  ansible.builtin.user:
+    name: "{{ new_admin_user }}"
+    comment: "{{ new_comment | default(omit) }}"
+    groups:
+    - adm
+    - sudo
+    - sys
+    home: "{{ new_base_homedir }}/{{ new_admin_user }}"
+    password: "{{ new_admin_password }}"
+    password_lock: false
+    shell: /bin/bash
+    state: present
+  notify: Reload SSH server
+- name: Lockdown admin home dir
+  become: yes
+  ansible.builtin.file:
+    path: "{{ new_base_homedir }}/{{ new_admin_user }}"
+    group: "{{ new_admin_user }}"
+    mode: "0700"
+    owner: "{{ new_admin_user }}"
+    state: directory
+- name: Lockdown admin ssh dir
+  become: yes
+  ansible.builtin.file:
+    path: "{{ new_base_homedir }}/{{ new_admin_user }}/.ssh"
+    group: "{{ new_admin_user }}"
+    mode: "0700"
+    owner: "{{ new_admin_user }}"
+    state: directory
+- name: Add admin incoming public key
+  become: yes
+  ansible.builtin.template:
+    dest: "{{ new_base_homedir }}/{{ new_admin_user }}/.ssh/authorized_keys"
+    group: "{{ new_admin_user }}"
+    mode: "0600"
+    owner: "{{ new_admin_user }}"
+    src: authorized_keys.j2
+...

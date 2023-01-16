@@ -1,0 +1,17 @@
+---
+- name: Ensure required vars are defined
+  become: yes
+  ansible.builtin.assert:
+    that:
+    - aa_base_homedir is defined
+    - aa_base_homedir is string
+- name: Ensure homedir is recognized by apparmor
+  become: yes
+  ansible.builtin.template:
+    dest: /etc/apparmor.d/tunables/home.d/local-home.site.local
+    group: root
+    mode: "0644"
+    owner: root
+    src: local-home.site.local.j2
+  notify: Reload apparmor
+...

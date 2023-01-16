@@ -1,0 +1,4 @@
+---
+# Default to a noop
+aa_base_homedir: /home
+...

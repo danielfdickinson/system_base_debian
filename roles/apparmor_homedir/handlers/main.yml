@@ -1,0 +1,7 @@
+---
+- name: Reload apparmor
+  become: yes
+  ansible.builtin.systemd:
+    name: apparmor
+    state: reloaded
+...
