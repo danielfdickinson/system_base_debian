@@ -9,9 +9,12 @@ fnmatch
 gsub
 ignoreip
 maxhoesel
+mcastprefix
 realtek
 recidive
 rejectattr
+selectattr
 shfmt
 skel
+tmpl
 ufw

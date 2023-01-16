@@ -1,0 +1,31 @@
+---
+- name: Ensure required variables are set
+  ansible.builtin.assert:
+    that:
+    - instance_fqdn is defined
+    - instance_fqdn is string
+    - instance_hostname is defined
+    - instance_hostname is string
+    - instance_v4addr is defined
+    - instance_v4addr is string
+    - hostname_aliases is defined
+    - hostname_aliases is not string and hostname_aliases is not mapping and hostname_aliases is iterable
+    - localhost_aliases is defined
+    - localhost_aliases is not string and localhost_aliases is not mapping and localhost_aliases is iterable
+- name: Add/Update fqdn/hostname aliases in /etc/hosts
+  become: yes
+  ansible.builtin.template:
+    dest: /etc/hosts
+    group: root
+    mode: "0644"
+    owner: root
+    src: hosts.j2
+- name: Preserve fqdn/hostname aliases in /etc/hosts across reboots
+  become: yes
+  ansible.builtin.template:
+    dest: /etc/cloud/templates/hosts.debian.tmpl
+    group: root
+    mode: "0644"
+    owner: root
+    src: hosts.debian.tmpl.j2
+...

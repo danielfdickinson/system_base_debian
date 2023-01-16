@@ -1,0 +1,8 @@
+---
+hostname_aliases: []
+instance_fqdn: "{{ ansible_facts['fqdn'] }}"
+instance_hostname: "{{ ansible_facts['hostname'] }}"
+instance_v4addr: "{{ ansible_facts['default_ipv4']['address'] }}"
+instance_v6addr: "{{ ansible_facts['default_ipv6']['address'] | default(local_ipv6_addr) | default(null) }}"
+localhost_aliases: []
+...
