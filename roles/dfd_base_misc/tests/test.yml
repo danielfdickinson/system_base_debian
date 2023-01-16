@@ -2,5 +2,5 @@
 - hosts: localhost
   remote_user: root
   roles:
-  - dfd_base
+  - dfd_base_misc
 ...
